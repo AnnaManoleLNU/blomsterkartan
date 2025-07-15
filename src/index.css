@@ -2,8 +2,7 @@
 
 /* GrönKarta Nature Discovery App - Color Palette inspired by Glacier National Park */
 
-:root {
-  /* Colors in H S L format — will be used as `hsl(var(--color-name))` */
+@theme  {
   --color-background: 0 0% 100%;
   --color-foreground: 222.2 84% 4.9%;
 
@@ -34,13 +33,12 @@
 
   --radius: 0.5rem;
 
-  /* Custom GrönKarta Colors */
-  --color-granite-ridge: 210 8% 57%;
-  --color-lake-mist: 15 9% 81%;
-  --color-warm-clouds: 33 61% 86%;
-  --color-glacial-fog: 32 20% 94%;
-  --color-twilight-lupine: 8 14% 64%;
-  --color-spring-meadows: 68 27% 42%;
+  /* GrönKarta Nature Discovery App Color Palette */
+  --color-blue: oklch(0.6745 0.0176 245.2);
+  --color-yellow: oklch(0.9034 0.0393 74.78);
+  --color-fog: oklch(0.9847 0.0083 236.56);
+  --color-rose: oklch(0.6915 0.0517 26.29);
+  --color-green: oklch(0.6016 0.0768 113.81);
 }
 
 /* Smooth scrolling */
