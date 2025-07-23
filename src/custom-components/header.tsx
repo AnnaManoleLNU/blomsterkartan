@@ -3,7 +3,6 @@ import { useLocation } from "react-router";
 
 export default function Header() {
   const location = useLocation();
-  console.log(location.pathname);
 
   const paths = [
     { href: "/", label: "Home" },

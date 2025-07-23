@@ -46,3 +46,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* App.css or index.css */
+body {
+  font-family: "Inria Serif", serif;
+}
