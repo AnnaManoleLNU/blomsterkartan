@@ -1,12 +1,16 @@
 import Header from "./custom-components/header";
-import Hero from "./custom-components/hero";
-
+import { Outlet } from "react-router";
 
 function App() {
   return (
-    <div className="bg-fog h-screen px-10 py-6">
-    <Header />
-    <Hero />
+    <div className="px-10 pt-4">
+      <Header />
+      {/* Child routes are rendered through Outlet */}
+      <main className="h-full">
+        <Outlet />
+      </main>
+
+      <footer>I am a footer.</footer>
     </div>
   );
 }
