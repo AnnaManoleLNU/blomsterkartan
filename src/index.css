@@ -46,21 +46,3 @@
 html {
   scroll-behavior: smooth;
 }
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: hsl(var(--color-glacial-fog));
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--color-lake-mist));
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--color-granite-ridge));
-}
