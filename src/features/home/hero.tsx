@@ -10,7 +10,6 @@ export default function Hero() {
         <div className=" flex relative mt-4">
           <Input
             placeholder="Sök efter blommor..."
-            className="border-blue rounded-full"
           />
           <Search className="h-full text-blue absolute right-2" />
         </div>
