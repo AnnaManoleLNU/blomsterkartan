@@ -74,7 +74,7 @@ export default function Header() {
       {/* Full-screen mobile menu */}
       {isOpen && (
         <div className="fixed inset-0 bg-background flex flex-col justify-center items-center z-40 md:hidden">
-          <ul className="text-3xl text-center space-y-6">
+          <ul className="text-3xl space-y-6">
             {renderLinks(() => setIsOpen(false))}
           </ul>
         </div>
