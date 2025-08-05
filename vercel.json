@@ -1,12 +1,8 @@
 {
   "functions": {
-    "api/upload.js": {
+    "api/upload.ts": {
       "memory": 3009,
       "maxDuration": 30
     }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/(.*)", "dest": "/" }
-  ]
+  }
 }
