@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/upload.ts": {
-      "runtime": "@vercel/node@4"
+      "runtime": "vercel/node@20.x"
     }
   },
   "rewrites": [
