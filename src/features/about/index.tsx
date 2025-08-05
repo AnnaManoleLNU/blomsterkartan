@@ -8,7 +8,7 @@ export default function About() {
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
     <>
-      <h1>Upload Picture</h1>
+      <h1>Upload Picture Test</h1>
 
       <form
         onSubmit={async (event) => {
