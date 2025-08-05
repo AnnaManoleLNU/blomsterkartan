@@ -1,17 +1,51 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PutBlobResult } from "@vercel/blob";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { PrismaClient } from '@prisma/client/edge'
+import { withAccelerate } from '@prisma/extension-accelerate'
+
 
 export default function About() {
+  const prisma = new PrismaClient().$extends(withAccelerate())
+
+  const getUsers = async () => {
+  const users = await prisma.user.findMany({
+  where: {
+    email: { endsWith: "prisma.io" }
+  },
+})
+
+  console.log("Users with email ending in prisma.io: ", users);
+  }
+
+  useEffect(() => {
+    getUsers().catch((error) => {
+      console.error("Error fetching users: ", error);
+    });
+  }, []);
+
+
+
+  const createUser = async () => {
+    const newUser = await prisma.user.create({
+      data: {
+        name: "Alice",
+        email: "alice@prisma.io",
+      },
+    });
+    console.log("Created new user: ", newUser);
+  };
+
+  console.log("PRISMA", prisma);
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
     <>
       <h1>Upload Picture Test</h1>
       <p>
-        This is a test page for uploading pictures. Please select a picture
-        file to upload.
+        This is a test page for uploading pictures. Please select a picture file
+        to upload.
       </p>
 
       <form
@@ -45,6 +79,9 @@ export default function About() {
           required
         />
         <Button type="submit">Upload</Button>
+        <Button type="button" onClick={createUser}>
+          Create User Alice
+        </Button>
       </form>
       {blob && (
         <div>
