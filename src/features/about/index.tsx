@@ -1,41 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PutBlobResult } from "@vercel/blob";
-import { useState, useRef, useEffect } from "react";
-import { PrismaClient } from '@prisma/client'
+import { useState, useRef } from "react";
 
 export default function About() {
-  const prisma = new PrismaClient()
-
-  const getUsers = async () => {
-  const users = await prisma.user.findMany({
-  where: {
-    email: { endsWith: "prisma.io" }
-  },
-})
-
-  console.log("Users with email ending in prisma.io: ", users);
-  }
-
-  useEffect(() => {
-    getUsers().catch((error) => {
-      console.error("Error fetching users: ", error);
-    });
-  }, []);
-
-
-
-  const createUser = async () => {
-    const newUser = await prisma.user.create({
-      data: {
-        name: "Alice",
-        email: "alice@prisma.io",
+  const createFlower = async (
+    name: string,
+    location: string,
+    imageUrl: string
+  ) => {
+    const response = await fetch("/api/flowers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({ name, location, imageUrl }),
     });
-    console.log("Created new user: ", newUser);
+    if (!response.ok) {
+      throw new Error("Failed to create flower");
+    }
+    const flower = await response.json();
+    console.log("Created flower:", flower);
   };
-
-  console.log("PRISMA", prisma);
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
@@ -77,8 +63,17 @@ export default function About() {
           required
         />
         <Button type="submit">Upload</Button>
-        <Button type="button" onClick={createUser}>
-          Create User Alice
+        <Button
+          type="button"
+          onClick={() => {
+            if (!blob?.url) {
+              alert("Upload an image first");
+              return;
+            }
+            createFlower("Rose", "Garden", blob.url);
+          }}
+        >
+          Create Flower
         </Button>
       </form>
       {blob && (
