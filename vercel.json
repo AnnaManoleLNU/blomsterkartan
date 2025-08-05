@@ -1,5 +1,11 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
-  ]
+  ],
+  "functions": {
+    "api/*.ts": {
+      "memory": 3009,
+      "maxDuration": 30
+    }
+  }
 }
