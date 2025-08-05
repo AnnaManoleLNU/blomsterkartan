@@ -1,4 +1,11 @@
 {
+  "version": 2,
+  "functions": {
+    "api/upload.ts": {
+      "memory": 3009,
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
   ]
