@@ -2,12 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PutBlobResult } from "@vercel/blob";
 import { useState, useRef, useEffect } from "react";
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
-
+import { PrismaClient } from '@prisma/client'
 
 export default function About() {
-  const prisma = new PrismaClient().$extends(withAccelerate())
+  const prisma = new PrismaClient()
 
   const getUsers = async () => {
   const users = await prisma.user.findMany({
