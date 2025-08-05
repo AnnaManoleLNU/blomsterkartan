@@ -1,8 +1,7 @@
-// api/upload.ts
-import { put } from '@vercel/blob';
-import { type VercelRequest, type VercelResponse } from '@vercel/node';
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+import { put } from '@vercel/blob';
+
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).send('Method Not Allowed');
   }

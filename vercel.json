@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/upload.ts": {
+    "api/upload.js": {
       "memory": 3009,
       "maxDuration": 30
     }

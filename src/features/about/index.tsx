@@ -9,6 +9,10 @@ export default function About() {
   return (
     <>
       <h1>Upload Picture Test</h1>
+      <p>
+        This is a test page for uploading pictures. Please select a picture
+        file to upload.
+      </p>
 
       <form
         onSubmit={async (event) => {
