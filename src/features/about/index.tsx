@@ -66,11 +66,7 @@ export default function About() {
         <Button
           type="button"
           onClick={() => {
-            if (!blob?.url) {
-              alert("Upload an image first");
-              return;
-            }
-            createFlower("Rose", "Garden", blob.url);
+            createFlower("Rose", "Garden", "test");
           }}
         >
           Create Flower
