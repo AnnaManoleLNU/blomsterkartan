@@ -18,8 +18,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Password is required" });
   }
 
-  console.log("Signup data:", { username, email, password });
-
   try {
     const existingUser = await prisma.user.findFirst({
       where: {
