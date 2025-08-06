@@ -2,16 +2,15 @@ import Header from "./custom-components/header";
 import { Outlet } from "react-router";
 
 function App() {
-
   return (
-    <div className="px-10 pt-4 ">
+    <div className="flex flex-col min-h-screen px-10 pt-4">
       <Header />
-      {/* Child routes are rendered through Outlet */}
-      <main>
+
+      <main className="flex-grow">
+        {/* This Outlet will render the child routes defined in main.tsx */}
         <Outlet />
       </main>
-
-      <footer>Copyright {new Date().getFullYear()}</footer>
+      <footer className="mt-auto">Copyright {new Date().getFullYear()}</footer>
     </div>
   );
 }

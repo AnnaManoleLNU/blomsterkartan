@@ -1,7 +1,10 @@
-import { Input } from "@/components/ui/input";
+
+  import { Input } from "@/components/ui/input";
+import { LogIn } from "lucide-react";
 import { useState } from "react";
 
 export default function Signup() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -18,9 +21,9 @@ export default function Signup() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-      const data = await res.json();
+      await res.json();
 
-      if (!res.ok) throw new Error(data.error || "Signup failed");
+      if (!res.ok) throw new Error("Signup failed");
       setSuccess(true);
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -32,13 +35,17 @@ export default function Signup() {
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-xl mb-4">Sign Up</h1>
-      {error && <p className="text-destructive">{error}</p>}
-      {success && (
-        <p className="text-green">Signup successful! Please login.</p>
-      )}
+    <div className="max-w-md mx-auto h-[80vh] flex flex-col justify-center text-center">
+      <h1 className="text-xl">Skapa ett konto</h1>
+      <p className="mb-4 text-sm text-muted-foreground">Fyll i dina uppgifter för att skapa ett konto.</p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <Input
+        type="text"
+        placeholder="Användarnamn"
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        />
         <Input
           type="email"
           placeholder="Email"
@@ -48,16 +55,30 @@ export default function Signup() {
         />
         <Input
           type="password"
-          placeholder="Password"
+          placeholder="Lösenord"
           required
           minLength={6}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" className="bg-green text-white p-2 rounded">
-          Sign Up
+          Skapa konto
         </button>
+
+        {error && <p className="text-destructive">{error}</p>}
+        {success && (
+          <p className="text-green">Konto skapades! Vänligen logga in.</p>
+        )}
       </form>
+
+      {/* another form for signing up */}
+      <p className="mt-8 text-sm">
+        Redan medlem?{"  "}
+        <a href="/login" className="text-green font hover:underline">
+        <LogIn className="inline mr-1" />
+          Logga in
+        </a>
+      </p>
     </div>
   );
 }

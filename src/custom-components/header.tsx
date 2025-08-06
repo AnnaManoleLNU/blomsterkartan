@@ -9,7 +9,6 @@ export default function Header() {
   const paths = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/signup", label: "Sign Up" },
     { href: "/login", label: "Login" },
   ];
 
