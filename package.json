@@ -25,6 +25,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.525.0",
+    "prisma-client-3f61e5a2e67f775a1db2773c71683722bbec8767b44743516a94b984e165ec30": "file:prisma/prisma-client",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.7.0",

@@ -22,6 +22,33 @@ export default function About() {
     const flower = await response.json();
     console.log("Created flower:", flower);
   };
+
+  const submitPicture = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    if (!inputFileRef.current?.files) {
+      throw new Error("No file selected");
+    }
+
+    const file = inputFileRef.current.files[0];
+    //const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+
+    const response = await fetch(
+      `/api/upload?filename=${encodeURIComponent(file.name)}`,
+      {
+        method: "POST",
+        body: file,
+      }
+    );
+    console.log("Response status:", response.status);
+
+    const newBlob = (await response.json()) as PutBlobResult;
+
+    setBlob(newBlob);
+  };
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
   return (
@@ -33,27 +60,7 @@ export default function About() {
       </p>
 
       <form
-        onSubmit={async (event) => {
-          event.preventDefault();
-
-          if (!inputFileRef.current?.files) {
-            throw new Error("No file selected");
-          }
-
-          const file = inputFileRef.current.files[0];
-
-          const response = await fetch(
-            `/api/upload?filename=${encodeURIComponent(file.name)}`,
-            {
-              method: "POST",
-              body: file,
-            }
-          );
-
-          const newBlob = (await response.json()) as PutBlobResult;
-
-          setBlob(newBlob);
-        }}
+        onSubmit={submitPicture}
       >
         <Input
           name="file"
