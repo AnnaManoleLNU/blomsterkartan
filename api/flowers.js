@@ -1,6 +1,9 @@
-import { PrismaClient } from '.prisma/client/index-browser.js' // Adjust the import path as necessary
+import { PrismaClient } from './prisma-client'
+import { withAccelerate } from '@prisma/extension-accelerate'
 
-const prisma = new PrismaClient()
+
+const prisma = new PrismaClient().$extends(withAccelerate())
+
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
