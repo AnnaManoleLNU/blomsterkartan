@@ -8,6 +8,7 @@
   },
   "scripts": {
     "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
