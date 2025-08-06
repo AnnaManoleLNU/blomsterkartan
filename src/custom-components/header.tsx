@@ -1,5 +1,5 @@
 import { Flower, Menu, X } from "lucide-react";
-import { useLocation } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -9,7 +9,8 @@ export default function Header() {
   const paths = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/google", label: "Login with Google" },
+    { href: "/signup", label: "Sign Up" },
+    { href: "/login", label: "Login" },
   ];
 
   const renderLinks = (onClick?: () => void) =>
@@ -17,8 +18,8 @@ export default function Header() {
       const isActive = path.href === location.pathname;
       return (
         <li key={path.href}>
-          <a
-            href={path.href}
+          <Link
+            to={path.href}
             className="group flex items-center space-x-2"
             onClick={onClick}
           >
@@ -33,7 +34,7 @@ export default function Header() {
               />
             </span>
             <span>{path.label}</span>
-          </a>
+          </Link>
         </li>
       );
     });
@@ -66,7 +67,7 @@ export default function Header() {
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={28} className="mr-3" /> : <Menu size={28}  />}
+          {isOpen ? <X size={28} className="mr-3" /> : <Menu size={28} />}
         </button>
         <ul className="hidden md:flex gap-10 items-center">{renderLinks()}</ul>
       </nav>
