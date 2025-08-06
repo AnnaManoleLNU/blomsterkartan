@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "postinstall": "prisma generate --no-engine",
+    "postinstall": "prisma generate",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
