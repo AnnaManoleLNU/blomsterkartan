@@ -4,7 +4,7 @@ import { LogIn } from "lucide-react";
 import { useState } from "react";
 
 export default function Signup() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,7 +19,7 @@ export default function Signup() {
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
       await res.json();
 
@@ -43,8 +43,8 @@ export default function Signup() {
         type="text"
         placeholder="Användarnamn"
         required
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
         />
         <Input
           type="email"
