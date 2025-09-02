@@ -23,8 +23,10 @@ export default function Signup() {
       });
       await res.json();
 
-      if (!res.ok) throw new Error("Signup failed");
+      //if (!res.ok) throw new Error("Signup failed");
       setSuccess(true);
+      
+      
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

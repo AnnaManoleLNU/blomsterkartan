@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     );
 
     // Send token in cookie or JSON - here, JSON:
-    res.status(200).json({ token, user: { id: user.id, email: user.email, username: user.username } });
+    res.status(200).json({ token });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: "Internal server error" });

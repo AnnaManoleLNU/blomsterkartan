@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
+
+
   if (req.method !== "POST") return res.status(405).end();
 
   const { username, email, password } = req.body;

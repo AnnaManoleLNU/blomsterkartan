@@ -1,11 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function Login() {
   const [identifier, setIdentifier] = useState(""); // email or username
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   async function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,16 +20,13 @@ export default function Login() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ identifier, password }),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Login failed");
-
-      // Save token somewhere (localStorage, cookie, or context)
-      localStorage.setItem("token", data.token);
-
-      setSuccess(true);
-      // Optionally redirect user here or fetch user data
+      
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem("token", data.token);
+        setSuccess(true);
+        navigate("/dashboard");
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -41,7 +40,8 @@ export default function Login() {
     <div className="max-w-md mx-auto h-[80vh] flex flex-col justify-center text-center">
       <h1 className="text-xl">Välkommen tillbaka till Blomsterkartan!</h1>
       <p className="mb-4 text-sm text-muted-foreground">
-        Logga in med användarnamn eller email för att se dina favorit blommor och mer.
+        Logga in med användarnamn eller email för att se dina favorit blommor
+        och mer.
       </p>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <Input

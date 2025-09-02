@@ -7,6 +7,8 @@ import App from './App.tsx';
 import Home from './features/home/index.tsx';
 import Login from './features/login/index.tsx';
 import Signup from './features/signup/index.tsx';
+import Dashboard from './features/dashboard/index.tsx';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
     <Route path="/about" element={<About />} />
     <Route path="/login" element={<Login />} />
     <Route path="/signup" element={<Signup />} />
+    <Route path="/dashboard" element={<Dashboard />} />
     </Route>
   </Routes>
   </BrowserRouter>
