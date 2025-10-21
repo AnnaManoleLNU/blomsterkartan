@@ -2,8 +2,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { PutBlobResult } from "@vercel/blob";
 import { useState, useRef } from "react";
+import { useUploadBlobMutation } from "../../../redux/blobsApi";
 
 export default function About() {
+  const inputFileRef = useRef<HTMLInputElement>(null);
+  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+
+  const [uploadBlob, { isLoading, isError }] = useUploadBlobMutation();
+
   const createFlower = async (
     name: string,
     location: string,
@@ -11,77 +17,75 @@ export default function About() {
   ) => {
     const response = await fetch("/api/flowers", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, location, imageUrl }),
     });
-    if (!response.ok) {
-      throw new Error("Failed to create flower");
-    }
+    if (!response.ok) throw new Error("Failed to create flower");
     const flower = await response.json();
     console.log("Created flower:", flower);
   };
 
-  const submitPicture = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const submitPicture = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!inputFileRef.current?.files) {
-      throw new Error("No file selected");
+    const file = inputFileRef.current?.files?.[0];
+    if (!file) throw new Error("No file selected");
+
+    // Build FormData to match the RTK Query mutation definition
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+
+    try {
+      const file = inputFileRef.current?.files?.[0];
+      if (!file) throw new Error("No file selected");
+      const newBlob = await uploadBlob({ file, filename: file.name }).unwrap();
+
+      setBlob(newBlob);
+    } catch (e) {
+      console.error("Upload failed:", e);
     }
-
-    const file = inputFileRef.current.files[0];
-    //const BASE_URL = import.meta.env.VITE_BASE_URL;
-
-
-    const response = await fetch(
-      `/api/upload?filename=${encodeURIComponent(file.name)}`,
-      {
-        method: "POST",
-        body: file,
-      }
-    );
-    console.log("Response status:", response.status);
-
-    const newBlob = (await response.json()) as PutBlobResult;
-
-    setBlob(newBlob);
   };
-  const inputFileRef = useRef<HTMLInputElement>(null);
-  const [blob, setBlob] = useState<PutBlobResult | null>(null);
+
   return (
     <>
       <h1>Upload Picture Test</h1>
-      <p>
-        This is a test page for uploading pictures. Please select a picture file
-        to upload.
-      </p>
+      <p>Select a picture file to upload.</p>
 
-      <form
-        onSubmit={submitPicture}
-      >
+      <form onSubmit={submitPicture}>
         <Input
           name="file"
           ref={inputFileRef}
           type="file"
           accept="image/jpeg, image/png, image/webp"
           required
+          disabled={isLoading}
         />
-        <Button type="submit">Upload</Button>
-        <Button
-          type="button"
-          onClick={() => {
-            createFlower("Rose", "Garden", "test");
-          }}
-        >
-          Create Flower
-        </Button>
+        <div className="flex gap-2 mt-2">
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? "Uploading…" : "Upload"}
+          </Button>
+          <Button
+            type="button"
+            onClick={() => createFlower("Rose", "Garden", "test")}
+            disabled={isLoading}
+          >
+            Create Flower
+          </Button>
+        </div>
       </form>
+
+      {isError && (
+        <p className="text-sm text-red-600 mt-2">
+          Upload failed
+        </p>
+      )}
+
       {blob && (
-        <div>
-          Blob url: <a href={blob.url}>{blob.url}</a>
+        <div className="mt-4">
+          Blob url:{" "}
+          <a href={blob.url} target="_blank" rel="noreferrer">
+            {blob.url}
+          </a>
         </div>
       )}
     </>
