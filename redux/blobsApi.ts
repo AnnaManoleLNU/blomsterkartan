@@ -34,7 +34,15 @@ export const blobsApi = createApi({
       }),
       invalidatesTags: ["FlowerBlobs"],
     }),
+
+    deleteBlob: builder.mutation<void, { url: string }>({
+      query: ({ url }) => ({
+        url: `api/blobs?url=${encodeURIComponent(url)}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["FlowerBlobs"],
+    }),
   }),
 });
 
-export const { useGetBlobsQuery, useUploadBlobMutation } = blobsApi;
+export const { useGetBlobsQuery, useUploadBlobMutation, useDeleteBlobMutation } = blobsApi;
