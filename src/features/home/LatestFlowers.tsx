@@ -1,47 +1,31 @@
-import { useEffect, useState } from "react";
-
-type Blob = {
-  downloadUrl: string;
-  pathname: string;
-  size: number;
-  uploadedAt: string;
-  url: string;
-};
+import { useGetBlobsQuery } from "../../../redux/blobsApi";
 
 export default function LatestFlowers() {
-  const [latestFlowers, setLatestFlowers] = useState<null | Blob[]>(null);
+  const { data: flowers, isLoading, isError, isFetching } = useGetBlobsQuery();
 
-  useEffect(() => {
-    const getLatestBlobs = async () => {
-      const response = await fetch("/api/blobs");
-      const json = await response.json();
-      const latestFlowers = json.blobs.sort(
-        (a: Blob, b: Blob) =>
-          new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-      );
-      setLatestFlowers(latestFlowers);
-    };
+  if (isLoading) {
+    return (
+      <>
+        <h1>Latest Flowers</h1>
+        <div className="flex gap-2">{Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="w-52 h-36 rounded-xl bg-gray-200 animate-pulse" />
+        ))}</div>
+      </>
+    );
+  }
 
-    getLatestBlobs();
-  }, []);
-
-  if (!latestFlowers || latestFlowers.length === 0)
+  if (isError || !flowers || flowers.length === 0) {
     return <>No latest flowers available!</>;
+  }
 
   return (
     <>
       <h1>Latest Flowers</h1>
-      <div className="flex gap-2">
-      {latestFlowers.map((flower: Blob) => {
-        return (
-
-            <img
-              src={flower.url}
-              alt={flower.pathname}
-              className="w-52 rounded-xl"
-            />
-        );
-      })}
+      {isFetching && <p className="text-sm text-gray-500">Refreshing…</p>}
+      <div className="flex gap-2 flex-wrap">
+        {flowers.map((f) => (
+          <img key={f.pathname} src={f.url} alt={f.pathname} className="w-52 rounded-xl" loading="lazy" />
+        ))}
       </div>
     </>
   );
