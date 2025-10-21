@@ -28,7 +28,7 @@ export const blobsApi = createApi({
 
     uploadBlob: builder.mutation<any, { file: File; filename: string }>({
       query: ({ file, filename }) => ({
-        url: `api/upload?filename=${encodeURIComponent(filename)}`,
+        url: `api/blobs?filename=${encodeURIComponent(filename)}`,
         method: "POST",
         body: file,
       }),

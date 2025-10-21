@@ -8,7 +8,7 @@ export default function About() {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [blob, setBlob] = useState<PutBlobResult | null>(null);
 
-  const [uploadBlob, { isLoading, isError }] = useUploadBlobMutation();
+  const [uploadBlob, { isLoading, isError, error }] = useUploadBlobMutation();
 
   const createFlower = async (
     name: string,
@@ -76,7 +76,11 @@ export default function About() {
 
       {isError && (
         <p className="text-sm text-red-600 mt-2">
-          Upload failed
+          {`Upload failed: ${
+            (error && "data" in error)
+              ? (error.data as { error?: string }).error
+              :  ""
+          }`}
         </p>
       )}
 
