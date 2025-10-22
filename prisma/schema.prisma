@@ -28,6 +28,7 @@ model Flower {
   name      String
   imageUrl  String
   location  String
+  notes     String?
   createdAt DateTime @default(now())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
