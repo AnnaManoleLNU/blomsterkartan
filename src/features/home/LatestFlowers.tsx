@@ -1,16 +1,7 @@
-import { useGetBlobsQuery, useDeleteBlobMutation } from "../../../redux/blobsApi";
+import { useGetBlobsQuery } from "../../../redux/blobsApi";
 
 export default function LatestFlowers() {
   const { data: flowers, isLoading, isError, isFetching } = useGetBlobsQuery();
-  const [deleteBlob, { isLoading: isDeleting }] = useDeleteBlobMutation();
-
-  const handleDelete = async (url: string) => {
-    try {
-      await deleteBlob({ url }).unwrap();
-    } catch (e) {
-      console.error("Delete failed:", e);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -36,13 +27,6 @@ export default function LatestFlowers() {
       <div className="flex gap-2 flex-wrap">
         {flowers.map((f) => (
           <div key={f.pathname} className="flex flex-col items-start gap-1">
-            <button
-              className="text-sm text-red-600 underline"
-              onClick={() => handleDelete(f.url)}
-              disabled={isDeleting}
-            >
-              {isDeleting ? "Deleting…" : "Delete"}
-            </button>
             <img
               src={f.url}
               alt={f.pathname}
