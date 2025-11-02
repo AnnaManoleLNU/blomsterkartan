@@ -42,12 +42,11 @@
   --color-green: oklch(0.6016 0.0768 113.81);
 }
 
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
 
-/* App.css or index.css */
 body {
   font-family: "Inria Serif", serif;
+  /* background-color: rgb(186, 144, 139, 0.12); */
 }
