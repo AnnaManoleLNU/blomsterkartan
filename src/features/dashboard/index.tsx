@@ -50,7 +50,7 @@ export default function Dashboard() {
         filename: pictureFile.name,
       }).unwrap();
 
-      const imageUrl = uploadRes?.url || uploadRes?.data?.url;
+      const imageUrl = uploadRes?.url;
       if (!imageUrl) throw new Error("Upload response missing image URL");
 
       await addFlower({ name, location, notes, imageUrl }).unwrap();

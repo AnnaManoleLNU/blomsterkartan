@@ -8,25 +8,14 @@ export type FlowerBlob = {
   url: string;
 };
 
+
 export const blobsApi = createApi({
   reducerPath: "blobsApi",
   baseQuery: fetchBaseQuery({ baseUrl: "/" }),
   tagTypes: ["FlowerBlobs"],
   endpoints: (builder) => ({
-    getBlobs: builder.query<FlowerBlob[], void>({
-      query: () => "api/blobs",
-      transformResponse: (data: { blobs: FlowerBlob[] }) =>
-        data.blobs
-          .slice()
-          .sort(
-            (a, b) =>
-              new Date(b.uploadedAt).getTime() -
-              new Date(a.uploadedAt).getTime()
-          ),
-      providesTags: ["FlowerBlobs"],
-    }),
-
-    uploadBlob: builder.mutation<any, { file: File; filename: string }>({
+    // don't need to GET blobs. Use flowers API to get associated blobs by imageUrl.
+    uploadBlob: builder.mutation< {url: string}, { file: File; filename: string }>({
       query: ({ file, filename }) => ({
         url: `api/blobs?filename=${encodeURIComponent(filename)}`,
         method: "POST",
@@ -45,4 +34,4 @@ export const blobsApi = createApi({
   }),
 });
 
-export const { useGetBlobsQuery, useUploadBlobMutation, useDeleteBlobMutation } = blobsApi;
+export const {  useUploadBlobMutation, useDeleteBlobMutation } = blobsApi;
